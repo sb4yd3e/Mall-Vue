@@ -3,8 +3,16 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import {post, fetch, patch, put} from './http/index';
+
+// 定义全局变量
+Vue.prototype.$post = post;
+Vue.prototype.$fetch = fetch;
+Vue.prototype.$patch = patch;
+Vue.prototype.$put = put;
 
 Vue.use(iView);
 Vue.config.productionTip = false;
