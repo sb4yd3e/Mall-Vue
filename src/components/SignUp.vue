@@ -29,6 +29,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import store from '@/vuex/store';
 import { mapState, mapMutations } from 'vuex';
 import Footer from '@/components/footer/Footer';
