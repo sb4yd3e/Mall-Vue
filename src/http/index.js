@@ -1,22 +1,3 @@
-// this.$Axios({
-//   method: 'post',
-//   url: '/user/',
-//   data: {
-//     "username": "comego_1026",
-//     "password": "123456",
-//     "phone": "123127",
-//     "nickname": "fant",
-//     "role": 1
-//   }
-// }).then(function(res){
-
-// }).catch(function(error){
-//     if (error.response) {
-//       // The request was made and the server responded with a status code
-//       // that falls out of the range of 2xx
-//       console.log(error.response.data);
-//     }
-// });
 /* eslint-disable */
 import Axios from 'axios';
 
