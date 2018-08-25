@@ -22,7 +22,7 @@ import Axios from 'axios';
 
 Axios.defaults.baseURL = '/api';
 Axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+// Axios.defaults.headers.post['Accept'] = 'application/json';
 //http request 拦截器
 // Axios.interceptors.request.use(
 //   config => {
@@ -88,16 +88,38 @@ export function fetch(url,params={}){
  * @returns {Promise}
  */
 
- export function post(url,data = {}){
-   return new Promise((resolve,reject) => {
-     Axios.post(url,data)
-          .then(response => {
-            resolve(response.data);
-          },err => {
-            reject(err)
-          })
-   })
- }
+// 抛出所有的response 
+async function base_post (url, data = {}) {
+  console.log(`- BASE_POST_TO: \n${url}`);
+  console.log(`- BASE_POST_DATA: \n${JSON.stringify(data)}`);
+  let   response = {};
+  try {
+    let res = await Axios.post (url, data);
+    // console.log(`- BASE_POST_SUCCESS: \n${JSON.stringify(res.data)}`);
+    response = res;
+  } catch (err) {
+    // console.log(`- BASE_POST_ERROR: \n${JSON.stringify(err.response.data)}`);
+    response  = err.response;
+  }
+  return response;
+}
+
+//返回最后的data
+export async function post (url, data) {
+  try {
+    let response = await base_post (url, data);
+    if (/^2[0-9]+$/.test (response.status)) {
+      //返回的是2XX status
+      console.log (`- POST_2XX(${response.status}):\n${JSON.stringify (response.data)}`);
+      return response.data;
+    } else {
+      console.log (`- POST_ERROR(${response.status}):\n${JSON.stringify (response.data)}`);
+      return {};
+    }
+  } catch (err) {
+    console.error (err);
+  }
+}
 
  /**
  * 封装patch请求
