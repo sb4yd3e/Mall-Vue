@@ -40,19 +40,22 @@ export default {
   methods: {
     ...mapMutations(['SET_SIGN_UP_SETP']),
     getcheckNum () {
-      if (this.formValidate.phone.length === 11) {
-        this.$Message.success({
-          content: '验证码为: 1234',
-          duration: 6,
-          closable: true
-        });
-      } else {
-        this.$Message.error({
-          content: '请输入正确的手机号',
-          duration: 6,
-          closable: true
-        });
-      }
+      // if (this.formValidate.phone.length === 11) {
+      //   this.$Message.success({
+      //     content: '验证码为: 1234',
+      //     duration: 6,
+      //     closable: true
+      //   });
+      // } else {
+      //   this.$Message.error({
+      //     content: '请输入正确的手机号',
+      //     duration: 6,
+      //     closable: true
+      //   });
+      // }
+
+      // 验证手机号格式正确与否调取获取验证码的api
+
     },
     handleSubmit (name) { // 提交验证
       this.$refs[name].validate((valid) => {

@@ -79,6 +79,7 @@ export default {
             phone: this.$route.query.phone,
             role: 1
           };
+          console.log(`- userinfo_tobe_register: \n${JSON.stringify(userinfo)}`);
           this.addSignUpUser(userinfo);
           father.SET_SIGN_UP_SETP(2);
           this.$router.push({ path: '/SignUp/signUpDone' });

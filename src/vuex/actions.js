@@ -1,3 +1,4 @@
+import {post} from '../http/index';
 // 获取秒杀数据
 export const loadSeckillsInfo = ({ commit }) => {
   return new Promise((resolve, reject) => {
@@ -708,13 +709,14 @@ export const loadShoppingCart = ({ commit }) => {
 // 添加注册用户
 export const addSignUpUser = ({ commit }, data) => {
   return new Promise((resolve, reject) => {
-    const userArr = localStorage.getItem('users');
-    let users = [];
-    if (userArr) {
-      users = JSON.parse(userArr);
-    }
-    users.push(data);
-    localStorage.setItem('users', JSON.stringify(users));
+    // const userArr = localStorage.getItem('users');
+    // let users = [];
+    // if (userArr) {
+    //   users = JSON.parse(userArr);
+    // }
+    // users.push(data);
+    // localStorage.setItem('users', JSON.stringify(users));
+    post('/user/', data);
   });
 };
 
