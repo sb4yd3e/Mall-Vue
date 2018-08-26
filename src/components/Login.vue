@@ -11,14 +11,14 @@
             <p>欢迎登陆</p>
           </div>
           <div class="form-box">
-            <Form ref="formInline" :model="formDate" :rules="ruleInline">
-              <FormItem prop="username">
-                  <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="手机号">
+            <Form ref="formInline" :model="formData" :rules="ruleInline">
+              <FormItem prop="phone">
+                  <i-input type="text" v-model="formData.phone" clearable size="large" placeholder="手机号">
                       <Icon type="ios-phone-portrait" slot="prepend"/> </Icon>
                   </i-input>
               </FormItem>
               <FormItem prop="password">
-                  <i-input type="password" v-model="formDate.password" clearable size="large" placeholder="密码">
+                  <i-input type="password" v-model="formData.password" clearable size="large" placeholder="密码">
                       <Icon type="ios-lock-outline" slot="prepend"> </Icon>
                   </i-input>
               </FormItem>
@@ -42,12 +42,12 @@ export default {
   name: 'Login',
   data () {
     return {
-      formDate: {
-        username: '',
+      formData: {
+        phone: '',
         password: ''
       },
       ruleInline: {
-        username: [
+        phone: [
           { required: true, message: '请输入手机号', trigger: 'blur' }
         ],
         password: [
@@ -62,10 +62,10 @@ export default {
     ...mapActions(['login']),
     handleSubmit (name) {
       const father = this;
-      console.log(this.formDate.username);
+      // console.log(`- FORM_DATA:\n${JSON.stringify(this.formData)}`);
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.login(father.formDate).then(result => {
+          this.login(father.formData).then(result => {
             if (result) {
               this.$Message.success('登陆成功');
               father.$router.push('/');
