@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "iview": "^2.13.1",
+    "iview": "^3.0.1",
     "v-distpicker": "^1.0.17",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

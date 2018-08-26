@@ -13,13 +13,13 @@
           <div class="form-box">
             <Form ref="formInline" :model="formDate" :rules="ruleInline">
               <FormItem prop="username">
-                  <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="用户名">
-                      <Icon type="person" slot="prepend"></Icon>
+                  <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="手机号">
+                      <Icon type="ios-phone-portrait" slot="prepend"/> </Icon>
                   </i-input>
               </FormItem>
               <FormItem prop="password">
                   <i-input type="password" v-model="formDate.password" clearable size="large" placeholder="密码">
-                      <Icon type="ios-locked-outline" slot="prepend"> </Icon>
+                      <Icon type="ios-lock-outline" slot="prepend"> </Icon>
                   </i-input>
               </FormItem>
               <FormItem>
@@ -48,7 +48,7 @@ export default {
       },
       ruleInline: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入手机号', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
