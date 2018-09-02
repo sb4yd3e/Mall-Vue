@@ -1,4 +1,8 @@
-import {post} from '../http/index';
+import { post,
+         fetch } from '../http/index';
+import   qs      from 'qs';
+
+// import service from '../http/request';
 // 获取秒杀数据
 export const loadSeckillsInfo = ({ commit }) => {
   return new Promise((resolve, reject) => {
@@ -710,7 +714,12 @@ export const loadShoppingCart = ({ commit }) => {
 export const addSignUpUser = ({ commit }, data) => {
   return new Promise((resolve, reject) => {
     try {
-      post('/user/', data);
+      post('/user/', data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    
     } catch (err) {
       console.log(err);
     }
@@ -718,17 +727,56 @@ export const addSignUpUser = ({ commit }, data) => {
 };
 
 // 用户登录
-export const login = ({ commit }, data) => {
-  return new Promise((resolve, reject) => {
-    let loginInfo = localStorage.getItem('loginInfo');
+export async function login ({ commit }, data) {
+    console.log(`-login data:\n${JSON.stringify(data)}`)
+    var loginInfo = localStorage.getItem('loginInfo');
     if (loginInfo) {
       return true;
+      console.log(`- login: 已经登录！`)
     } else {
-      post('/login/', data);
-      // localStorage.setItem('loginInfo', JSON.stringify(data))
+      try {
+        let qsdata = qs.stringify(data)
+        let res = 
+        await post('/login/', qsdata, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+        if (!res || !res.data) {
+          return false
+          console.log(`- login: 没有登录数据！`)
+        }
+        loginInfo = res.data;
+      } catch (err) {
+        console.log(err);
+      }
+      localStorage.setItem('loginInfo', JSON.stringify(loginInfo))
     }
-  });
-};
+}
+// export const login = ({ commit }, data) => {
+//   return new Promise((resolve, reject) => {
+//     console.log(`-login data:\n${JSON.stringify(data)}`)
+//     var loginInfo = localStorage.getItem('loginInfo');
+//     if (loginInfo) {
+//       return true;
+//       console.log(`- login: 已经登录！`)
+//     } else {
+//       try {
+//         let qsdata = qs.stringify(data)
+//         loginInfo = 
+//         post('/login/', qsdata, {
+//           headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded'
+//           }
+//         });
+//       } catch (err) {
+//         console.log(err);
+//       }
+//       console.log(loginInfo)
+//       // localStorage.setItem('loginInfo', JSON.stringify(loginInfo))
+//     }
+//   });
+// };
 
 // 退出登陆
 export const signOut = ({ commit }) => {

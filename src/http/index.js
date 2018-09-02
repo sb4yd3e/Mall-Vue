@@ -2,7 +2,7 @@
 import Axios from 'axios';
 
 Axios.defaults.baseURL = '/api';
-Axios.defaults.headers.post['Content-Type'] = 'application/json';
+// Axios.defaults.headers.post['Content-Type'] = 'application/json';
 // Axios.defaults.headers.post['Accept'] = 'application/json';
 //http request 拦截器
 // Axios.interceptors.request.use(
@@ -53,9 +53,11 @@ export function fetch(url,params={}){
       params:params
     })
     .then(response => {
+      console.log(response);
       resolve(response.data);
     })
     .catch(err => {
+      console.log(err)
       reject(err)
     })
   })
@@ -70,25 +72,29 @@ export function fetch(url,params={}){
  */
 
 // 抛出所有的response 
-async function base_post (url, data = {}) {
+async function base_post (url, data = {}, options = {}) {
   console.log(`- BASE_POST_TO: \n${url}`);
   console.log(`- BASE_POST_DATA: \n${JSON.stringify(data)}`);
   let   response = {};
   try {
-    let res = await Axios.post (url, data);
-    // console.log(`- BASE_POST_SUCCESS: \n${JSON.stringify(res.data)}`);
+    let res = await Axios.post(url, data, {
+      headers: {
+        'Content-Type':'application/x-www-form-urlencoded'
+      }
+    });
+    console.log(`- BASE_POST_SUCCESS: \n${JSON.stringify(res.data)}`);
     response = res;
   } catch (err) {
-    // console.log(`- BASE_POST_ERROR: \n${JSON.stringify(err.response.data)}`);
+    console.log(`- BASE_POST_ERROR: \n${JSON.stringify(err.response.data)}`);
     response  = err.response;
   }
   return response;
 }
 
 //返回最后的data
-export async function post (url, data) {
+export async function post (url, data, options) {
   try {
-    let response = await base_post (url, data);
+    let response = await base_post (url, data, options);
     if (/^2[0-9]+$/.test (response.status)) {
       //返回的是2XX status
       console.log (`- POST_2XX(${response.status}):\n${JSON.stringify (response.data)}`);
